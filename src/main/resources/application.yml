@@ -13,6 +13,9 @@ flyway:
   locations: classpath:db/migration
 
 security:
-  jwt:
-    secret: YourVerySecretKeyHere
     expirationMs: 86400000
+
+
+
+jwt:
+  jwtSecret: ajskhfjkgdsuyciauojkglkbdsnjcvfnmdxvcdnafbjksldvfamn

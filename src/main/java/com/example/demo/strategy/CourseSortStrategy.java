@@ -1,4 +1,10 @@
 package com.example.demo.strategy;
 
-public class CourseSortStrategy {
+
+import com.example.demo.entity.Course;
+
+import java.util.List;
+
+public interface CourseSortStrategy {
+    List<Course> sort(List<Course> courses);
 }

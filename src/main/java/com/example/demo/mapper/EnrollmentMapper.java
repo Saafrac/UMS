@@ -10,12 +10,9 @@ import org.springframework.stereotype.Component;
 @Component
 @Mapper(componentModel = "spring")
 public interface EnrollmentMapper {
-    @Mapping(target = "student", expression = "java(mapStudent(dto.getStudentId()))")
-    @Mapping(target = "course",  expression = "java(mapCourse(dto.getCourseId()))")
+
     Enrollment toEntity(EnrollmentDto dto);
 
-    @Mapping(target = "studentId", source = "entity.student.id")
-    @Mapping(target = "courseId",  source = "entity.course.id")
     EnrollmentDto toDto(Enrollment entity);
 
     default Student mapStudent(Long studentId) {

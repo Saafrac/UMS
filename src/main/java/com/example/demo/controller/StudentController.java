@@ -2,6 +2,9 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.student.StudentDto;
 import com.example.demo.service.StudentService;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,9 +14,17 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 import java.util.List;
 
+@SecurityScheme(
+        name = "bearerAuth",
+        type = SecuritySchemeType.HTTP,
+        scheme = "bearer",
+        bearerFormat = "JWT"
+)
+
 @RestController
 @RequestMapping("/students")
 @RequiredArgsConstructor
+@Tag(name = "Students", description = "CRUD operations on students")
 public class StudentController {
     private final StudentService svc;
 

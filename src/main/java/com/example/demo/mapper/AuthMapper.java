@@ -9,6 +9,5 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface AuthMapper {
-    @Mapping(target="role", expression="java(User.Role.valueOf(req.getRole()))")
     User toUser(RegisterRequest req);
 }

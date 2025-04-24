@@ -42,7 +42,7 @@ public class SecurityConfig {
     }
 
     String[] PROJECT_ENDPOINTS = {
-            "/auth/**", "/v3/api-docs/**", "/swagger-ui/**"
+            "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html",
     };
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -52,6 +52,7 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(PROJECT_ENDPOINTS).permitAll()
+                        .requestMatchers("/auth/**").permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore(jwtAuthFilter(), UsernamePasswordAuthenticationFilter.class);
 

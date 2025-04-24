@@ -9,10 +9,10 @@ import org.springframework.stereotype.Component;
 @Component
 @Mapper(componentModel = "spring")
 public interface CourseMapper {
-    @Mapping(target = "teacher", expression = "java(mapTeacher(dto.getTeacherId()))")
+
     Course toEntity(CourseDto dto);
 
-    @Mapping(target = "teacherId", source = "entity.teacher.id")
+
     CourseDto toDto(Course entity);
 
     default User mapTeacher(Long teacherId) {

@@ -15,10 +15,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CourseController {
     private final CourseService svc;
-//    private final String ID=
 
     @PostMapping
-//    @PreAuthorize("hasRole('ADMIN') or hasRole('TEACHER')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('TEACHER')")
     public ResponseEntity<CourseDto> create(
             @Valid
             @RequestBody CourseDto dto) {

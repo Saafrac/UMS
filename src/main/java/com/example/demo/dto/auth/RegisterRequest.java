@@ -17,5 +17,8 @@ public class RegisterRequest {
 
     @NotBlank @Size(min = 6, message = "Password must be at least 6 characters")
     private String password;
+
+    @NotBlank
+    private String role; // ADMIN, TEACHER, STUDENT
 }
 

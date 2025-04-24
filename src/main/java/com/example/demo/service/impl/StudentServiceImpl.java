@@ -5,8 +5,13 @@ import com.example.demo.entity.Student;
 import com.example.demo.mapper.StudentMapper;
 import com.example.demo.repository.StudentRepository;
 import com.example.demo.service.StudentService;
+import com.example.demo.specification.StudentSpecification;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import java.util.*;
 
@@ -31,11 +36,21 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<StudentDto> getAll() {
-        List<Student> list = repo.findAll();
-        List<StudentDto> dtos = new ArrayList<>();
-        for (Student s: list) dtos.add(mapper.toDto(s));
-        return dtos;
+    public Page<StudentDto> getAll(
+            String name,
+            String major,
+            Pageable pageable) {
+        Specification<Student> spec = Specification.where(null);
+
+        if (name != null && !name.isBlank()) {
+            spec = spec.and(StudentSpecification.nameContains(name));
+        }
+        if (major != null && !major.isBlank()) {
+            spec = spec.and(StudentSpecification.majorEquals(major));
+        }
+
+        Page<Student> page = repo.findAll(spec, pageable);
+        return page.map(mapper::toDto);
     }
 
     @Override

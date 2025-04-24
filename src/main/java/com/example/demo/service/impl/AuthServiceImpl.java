@@ -12,6 +12,9 @@ import com.example.demo.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,7 +36,6 @@ public class AuthServiceImpl implements AuthService {
         if (userRepo.findByEmail(req.getEmail()).isPresent())
             throw new RuntimeException("Email in use");
         User user = mapper.toUser(req);
-        user.setRole(User.Role.STUDENT);
         user.setPassword(encoder.encode(req.getPassword()));
         user = userRepo.save(user);
         String token = jwtUtils.generateToken(user.getUsername());
@@ -48,16 +50,25 @@ public class AuthServiceImpl implements AuthService {
     @Override
     @Transactional
     public JwtResponse login(LoginRequest req) {
-        Authentication auth = authManager.authenticate(
+        Authentication authentication = authManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        req.getUsernameOrEmail(), req.getPassword()));
-        User user = (User) auth.getPrincipal();
-        String token = jwtUtils.generateToken(user.getUsername());
+                        req.getUsernameOrEmail(),
+                        req.getPassword()
+                )
+        );
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        String username = ((UserDetails) authentication.getPrincipal()).getUsername();
+        com.example.demo.entity.User userEntity = userRepo.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
+
+        String token = jwtUtils.generateToken(username);
         return JwtResponse.builder()
-                .token(token).userId(user.getId())
-                .username(user.getUsername())
-                .email(user.getEmail())
-                .role(user.getRole().name())
+                .token(token)
+                .userId(userEntity.getId())
+                .username(userEntity.getUsername())
+                .email(userEntity.getEmail())
+                .role(userEntity.getRole().name())
                 .build();
     }
 }

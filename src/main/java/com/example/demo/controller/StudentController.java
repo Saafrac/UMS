@@ -31,7 +31,8 @@ public class StudentController {
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<StudentDto> create(
-            @Valid @RequestBody StudentDto dto) {
+            @Valid
+            @RequestBody StudentDto dto) {
         return ResponseEntity.ok(svc.create(dto));
     }
 

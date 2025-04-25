@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/ums_db
     username: postgres
-    password: ali1230123
+    password: 123123123
   jpa:
     hibernate:
       ddl-auto: validate

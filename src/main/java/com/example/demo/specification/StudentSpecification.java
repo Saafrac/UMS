@@ -3,7 +3,6 @@ package com.example.demo.specification;
 
 import com.example.demo.entity.Student;
 import org.springframework.data.jpa.domain.Specification;
-import jakarta.persistence.criteria.*;
 
 public class StudentSpecification {
 

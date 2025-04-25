@@ -59,7 +59,8 @@ OpenAPI JSON spec:
 ## Build and Run Commands
 
 ```bash
-
+mvn clean install
+mvn spring-boot:run
 
 ```
 

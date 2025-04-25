@@ -28,6 +28,9 @@ A RESTful Spring Boot application for managing a university system. Supports aut
 - `POST /students` – Add student (ADMIN)
 - `GET /courses` – View all courses (ALL)
 - `POST /enrollments` – Enroll student (ADMIN, TEACHER)
+- `GET /students?name=John&major=Physics&page=0&size=10&sort=name,asc ` - Sort + Filtering + Paginataion
+
+
 
 API Documentation (Swagger)
 This project includes interactive API documentation via Swagger UI, powered by springdoc-openapi.
@@ -56,6 +59,7 @@ OpenAPI JSON spec:
 ## Build and Run Commands
 
 ```bash
+
 
 ```
 
